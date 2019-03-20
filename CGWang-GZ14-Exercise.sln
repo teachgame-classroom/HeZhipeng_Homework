@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLoopExercise_Hezhipeng"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise-190319", "Exercise-190319\Exercise-190319.csproj", "{0686DA02-0FA3-458C-915C-492EF2DCC20A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Exercise-190320", "Exercise-190320\Exercise-190320.csproj", "{B826D255-56DF-4F89-8D6E-8990E6B22ED7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{0686DA02-0FA3-458C-915C-492EF2DCC20A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0686DA02-0FA3-458C-915C-492EF2DCC20A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0686DA02-0FA3-458C-915C-492EF2DCC20A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B826D255-56DF-4F89-8D6E-8990E6B22ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B826D255-56DF-4F89-8D6E-8990E6B22ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B826D255-56DF-4F89-8D6E-8990E6B22ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B826D255-56DF-4F89-8D6E-8990E6B22ED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

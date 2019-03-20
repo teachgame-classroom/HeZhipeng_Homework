@@ -43,31 +43,7 @@ namespace GameLoopExercise_Hezhipeng
 
         public static void EncounterMessage(List<Charactar> enemys)
         {
-            List<string> enemyNames = new List<string>();
-            Dictionary<string, int> enemyNameNumber = new Dictionary<string, int>();
-            foreach (Charactar enemy in enemys)
-            {
-                bool isExistingName = enemyNames.Contains(enemy.name);
-                if (isExistingName)
-                {
-                    enemyNameNumber[enemy.name]++;
-                }
-                else
-                {
-                    enemyNames.Add(enemy.name);
-                    enemyNameNumber.Add(enemy.name, 1);
-                }
-            }
-
-            //
-            string enemyNumberMessage = string.Empty;
-            foreach (string enemyName in enemyNames)
-            {
-                enemyNumberMessage += string.Format(ENCOUNTER_NUMBER_MESSAEG, enemyNameNumber[enemyName], enemyName);
-            }
-            //
-            enemyNumberMessage = enemyNumberMessage.Substring(0, enemyNumberMessage.Length - 1);
-            Console.WriteLine(ENCOUNTER_MESSAGE_0, enemyNumberMessage);
+            Console.WriteLine(ENCOUNTER_MESSAGE_0, GetEnemysMessage(enemys));
         }
 
         public static void FightingMessage(List<Charactar> enemys, Player player)
@@ -75,10 +51,10 @@ namespace GameLoopExercise_Hezhipeng
             string enemyHpMessage = string.Empty;
             foreach (Charactar enemy in enemys)
             {
-                enemyHpMessage += string.Format(FIGHTING_ENEMY_HP_MESSAGE, enemy.name, enemy.HP);
+                enemyHpMessage += string.Format(FIGHTING_ENEMY_HP_MESSAGE, enemy.name, enemy.GetHP());
             }
             enemyHpMessage = enemyHpMessage.Substring(0, enemyHpMessage.Length - 1);
-            Console.WriteLine(FIGHTING_MESSAGE, enemyHpMessage, player.HP);
+            Console.WriteLine(FIGHTING_MESSAGE, enemyHpMessage, player.GetHP());
         }
 
         public static void EndFightingMessage()
@@ -109,11 +85,56 @@ namespace GameLoopExercise_Hezhipeng
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("                     {0} [HP:{1}/{2}]", player.name, player.HP, player.maxHP);
+            Console.WriteLine("                     {0} [HP:{1}/{2}]", player.name, player.GetHP(), player.GetMaxHP());
             Console.WriteLine();
             Console.WriteLine("┌──────────────────────────────┐");
             Console.WriteLine("│                    1-前进 2-休息 0-退出                    │");
             Console.WriteLine("└──────────────────────────────┘");
+        }
+
+        public static void UIEncounterEnemy(int prog, int progAmount, Player player, List<Charactar> enemys)
+        {
+            GetEnemysMessage(enemys);
+            Console.WriteLine("------------------------游戏进程{0}/{1}------------------------", prog, progAmount);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("                 {0}", string.Format(ENCOUNTER_MESSAGE_0, GetEnemysMessage(enemys)));
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("                     {0} [HP:{1}/{2}]", player.name, player.GetHP(), player.GetMaxHP());
+            Console.WriteLine();
+            Console.WriteLine("┌──────────────────────────────┐");
+            Console.WriteLine("│                    1-前进 2-休息 0-退出                    │");
+            Console.WriteLine("└──────────────────────────────┘");
+        }
+
+        private static string GetEnemysMessage(List<Charactar> enemys)
+        {
+            List<string> enemyNames = new List<string>();
+            Dictionary<string, int> enemyNameNumber = new Dictionary<string, int>();
+            foreach (Charactar enemy in enemys)
+            {
+                bool isExistingName = enemyNames.Contains(enemy.name);
+                if (isExistingName)
+                {
+                    enemyNameNumber[enemy.name]++;
+                }
+                else
+                {
+                    enemyNames.Add(enemy.name);
+                    enemyNameNumber.Add(enemy.name, 1);
+                }
+            }
+
+            //
+            string enemysMessage = string.Empty;
+            foreach (string enemyName in enemyNames)
+            {
+                enemysMessage += string.Format(ENCOUNTER_NUMBER_MESSAEG, enemyNameNumber[enemyName], enemyName);
+            }
+            //
+            enemysMessage = enemysMessage.Substring(0, enemysMessage.Length - 1);
+            return enemysMessage;
         }
 
         public static void UIInFighting(int prog, int progAmount, Player player, List<Charactar> enemys)
@@ -123,13 +144,48 @@ namespace GameLoopExercise_Hezhipeng
             Console.Write("                     ");
             foreach(Charactar enemy in enemys)
             {
-                Console.Write("{0} [HP:{1}/{2}]", enemy.name, enemy.HP, enemy.maxHP);
+                Console.Write("{0} [HP:{1}/{2}]", enemy.name, enemy.GetHP(), enemy.GetMaxHP());
             }
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("  {0} [HP:{1}/{2}]", player.name, player.HP, player.maxHP);
+            Console.WriteLine("  {0} [HP:{1}/{2}]", player.name, player.GetHP(), player.GetMaxHP());
+            Console.WriteLine();
+            Console.WriteLine("┌──────────────────────────────┐");
+            Console.WriteLine("│                    1-攻击 2-逃跑 0-退出                    │");
+            Console.WriteLine("└──────────────────────────────┘");
+        }
+
+        public static void UIEndFighting(int prog, int progAmount, Player player)
+        {
+            Console.WriteLine("------------------------游戏进程{0}/{1}------------------------", prog, progAmount);
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("                  战斗结束,为你恢复所有血量");
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("                     {0} [HP:{1}/{2}]", player.name, player.GetHP(), player.GetMaxHP());
+            Console.WriteLine();
+            Console.WriteLine("┌──────────────────────────────┐");
+            Console.WriteLine("│                    1-前进 2-休息 0-退出                    │");
+            Console.WriteLine("└──────────────────────────────┘");
+        }
+
+        public static void UIRunAway(int prog, int progAmount, Player player, List<Charactar> enemys, bool isSuccess)
+        {
+            Console.WriteLine("------------------------游戏进程{0}/{1}------------------------", prog, progAmount);
+            Console.WriteLine();
+            Console.Write("                     ");
+            foreach (Charactar enemy in enemys)
+            {
+                Console.Write("{0} [HP:{1}/{2}]", enemy.name, enemy.GetHP(), enemy.GetMaxHP());
+            }
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine("                            {0}", isSuccess ? "逃跑成功": "逃跑失败");
+            Console.WriteLine();
+            Console.WriteLine("  {0} [HP:{1}/{2}]", player.name, player.GetHP(), player.GetMaxHP());
             Console.WriteLine();
             Console.WriteLine("┌──────────────────────────────┐");
             Console.WriteLine("│                    1-攻击 2-逃跑 0-退出                    │");

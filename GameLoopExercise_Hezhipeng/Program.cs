@@ -10,41 +10,16 @@ namespace GameLoopExercise_Hezhipeng
     class Program
     {
         private static Game game = new Game();
-        private static Thread renderThread;
-        private static Thread updateThread;
 
         static void Main(string[] args)
         {
 
             game.Start();
-            StartThread();
             while (game.IsRunning())
             {
-                //game.Update();
-                //game.Render();
+                game.Update();
             }
-            AbortThread();
             game.End();
-
-            //Console.ReadLine();
-        }
-
-        private static void StartThread()
-        {
-            renderThread = new Thread(RenderLoop);
-            renderThread.Start();
-
-            updateThread = new Thread(UpdateLoop);
-            updateThread.Start();
-        }
-
-        private static void RenderLoop()
-        {
-            while (game.IsRunning())
-            {
-                game.Render();
-                Thread.Sleep(200);
-            }
         }
 
         private static void UpdateLoop()
@@ -53,19 +28,6 @@ namespace GameLoopExercise_Hezhipeng
             {
                 game.Update();
                 Thread.Sleep(200);
-            }
-        }
-
-        private static void AbortThread()
-        {
-            if(renderThread != null)
-            {
-                renderThread.Abort();
-            }
-
-            if (updateThread != null)
-            {
-                updateThread.Abort();
             }
         }
     }

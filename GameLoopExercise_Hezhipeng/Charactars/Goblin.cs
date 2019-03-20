@@ -33,7 +33,7 @@ namespace GameLoopExercise_Hezhipeng
             //recoverMP = Tools.GetRandom(0, 3);
             recoverMP = 0;
             // 初始化攻击力
-            act = baseAct + Tools.GetRandom(-1, 1);
+            atk = baseAct + Tools.GetRandom(-1, 1);
             // 初始化技能
             skills = new List<Skill>();
             skills.Add(new Attack());

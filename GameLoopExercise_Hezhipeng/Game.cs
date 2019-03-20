@@ -3,36 +3,49 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace GameLoopExercise_Hezhipeng
 {
     public class Game
     {
         // 定义游戏进程场景输入
-        //private const string GO_ON = "1";
-        //private const string STOP = "2";
         private const ConsoleKey GO_ON_1 = ConsoleKey.D1;
         private const ConsoleKey GO_ON_2 = ConsoleKey.NumPad1;
         private const ConsoleKey STOP_1 = ConsoleKey.D2;
         private const ConsoleKey STOP_2 = ConsoleKey.NumPad2;
         // 定义战斗场景输入
-        //private const string ATTACT = "1";
-        //private const string RUN = "2";
         private const ConsoleKey ATTACT_1 = ConsoleKey.D1;
         private const ConsoleKey ATTACT_2 = ConsoleKey.NumPad1;
         private const ConsoleKey RUN_1 = ConsoleKey.D2;
         private const ConsoleKey RUN_2 = ConsoleKey.NumPad2;
         // 定义退出游戏输入
-        //private const string EXIT = "0";
         private const ConsoleKey EXIT_1 = ConsoleKey.D0;
         private const ConsoleKey EXIT_2 = ConsoleKey.NumPad0;
+        // 定义游戏状态标示
+        private const int NOT_STATE = -1;
+        private const int GAME_OVER = 0;
+        private const int NOT_FIGHTING = 1;
+        private const int ENCOUNTER_ENEMY = 2;
+        private const int FIGHTING = 3;
+        private const int END_FIGHTING = 4;
+        //// 定义逃跑状态标示
+        private const int RUN_AWAY_SUCCESS = 1;
+        private const int RUN_AWAY_DEFEATED = 0;
 
-        // 用户输入
-        protected string input { get; set; }
+        // 休眠时长(ms)
+        private const int SLEEP_TIME = 100;
+        // 渲染线程
+        private Thread renderThread;
+        // 读取输入线程
+        private Thread gameplayThread;
+
+        // 游戏状态
+        private int gameState;
+        // 逃跑状态
+        private int runAwayState;
+
         private ConsoleKeyInfo inputKey;
-
-        // 游戏运行标示
-        protected bool isRunning { get; set; }
 
         // 进程总数
         public int progressAmount = 20;
@@ -43,91 +56,155 @@ namespace GameLoopExercise_Hezhipeng
 
         public List<Charactar> enemys;
 
-        public bool isGameOver;
-
-        public bool isFighting;
-        // 进程改变标示
-        private bool isProgChange;
-
-
         public void Start()
         {
             player_1 = new Player("Silver");
-            isRunning = true;
-            isFighting = false;
-            //Console.WriteLine("游戏开始");
-            //Display.InputMessage(isFighting);
+            gameState = NOT_FIGHTING;
+            runAwayState = NOT_STATE;
+
+            renderThread = new Thread(RenderLoop);
+            renderThread.Start();
+
+            gameplayThread = new Thread(UpdateGameplayLoop);
+            gameplayThread.Start();
         }
 
         public void Update()
         {
             UpdateInput();
-            UpdateGameplay();
+        }
+
+        private void UpdateGameplayLoop()
+        {
+            while (IsRunning())
+            {
+                UpdateGameplay();
+                Thread.Sleep(SLEEP_TIME);
+            }
         }
 
         private void UpdateInput()
         {
-            //input = Console.ReadLine();
             inputKey = Console.ReadKey(true);
         }
 
         private void UpdateGameplay()
         {
-            isRunning = !EXIT_1.Equals(inputKey.Key) && !EXIT_2.Equals(inputKey.Key);
             Action();
+            IsGameOver();
+            inputKey = new ConsoleKeyInfo();
         }
 
-        public void Render()
+        private void RenderLoop()
+        {
+            while (IsRunning())
+            {
+                Render();
+                Thread.Sleep(SLEEP_TIME);
+            }
+        }
+
+        private void Render()
         {
             Console.Clear();
-            if (isGameOver)
+            switch (gameState)
             {
-                Display.UIGameOver(progress, progressAmount);
+                case GAME_OVER:
+                    Display.UIGameOver(progress, progressAmount);
+                    break;
+                case NOT_FIGHTING:
+                    Display.UINotFighting(progress, progressAmount, player_1);
+                    break;
+                case ENCOUNTER_ENEMY:
+                    Display.UIEncounterEnemy(progress, progressAmount, player_1, enemys);
+                    Thread.Sleep(1000);
+                    break;
+                case FIGHTING:
+                    if (player_1 != null && !player_1.IsDea() && enemys != null && enemys.Count > 0)
+                    {
+                        if (runAwayState == NOT_STATE)
+                        {
+                            Display.UIInFighting(progress, progressAmount, player_1, enemys);
+                        }
+                        else
+                        {
+                            Display.UIRunAway(progress, progressAmount, player_1, enemys, runAwayState == RUN_AWAY_SUCCESS);
+                            Thread.Sleep(1000);
+                        }
+                    }
+                    break;
+                case END_FIGHTING:
+                    Display.UIEndFighting(progress, progressAmount, player_1);
+                    Thread.Sleep(1000);
+                    break;
+                default:
+                    break;
             }
-            else if (isFighting)
-            {
-                if (enemys != null && enemys.Count > 0)
-                {
-                    Display.UIInFighting(progress, progressAmount, player_1, enemys);
-                }
-                else
-                {
-
-                }
-            }
-            else if (!isFighting)
-            {
-                Display.UINotFighting(progress, progressAmount, player_1);
-            } 
         } 
 
         public void End()
         {
+            gameplayThread.Abort();
+            renderThread.Abort();
             Console.WriteLine("游戏结束");
         }
 
         public bool IsRunning()
         {
-            return isRunning;
+            return !EXIT_1.Equals(inputKey.Key) && !EXIT_2.Equals(inputKey.Key);
         }
 
         private void Action()
         {
-            if (!isFighting && (GO_ON_1.Equals(inputKey.Key) || GO_ON_2.Equals(inputKey.Key)))
+            switch (gameState)
+            {
+                case NOT_FIGHTING:
+                    NotFighting();
+                    break;
+                case ENCOUNTER_ENEMY:
+                    gameState = FIGHTING;
+                    break;
+                case FIGHTING:
+                    Fighting();
+                    break;
+                case END_FIGHTING:
+                    player_1.RecoverHP(player_1.GetMaxHP());
+                    Thread.Sleep(1000);
+                    gameState = NOT_FIGHTING;
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        private bool IsGoal()
+        {
+            return progressAmount > 0 && progress >= progressAmount;
+        }
+
+        private bool IsGameOver()
+        {
+            bool isGameOver = IsGoal() || player_1 == null || player_1.IsDea();
+            if (isGameOver)
+            {
+                gameState = GAME_OVER;
+            }
+            return isGameOver;
+        }
+
+        private void NotFighting()
+        {
+            if (GO_ON_1.Equals(inputKey.Key) || GO_ON_2.Equals(inputKey.Key))
             {
                 progress++;
-                //Display.ProgressMessage(progress, progressAmount);
-                isProgChange = true;
-                if (IsEncounterEnemy())
+                if (IsEncounterEnemy(true))
                 {
                     EncounterEnemy();
                 }
             }
-            else if (!isFighting && (STOP_1.Equals(inputKey.Key) || STOP_2.Equals(inputKey.Key)))
+            else if (STOP_1.Equals(inputKey.Key) || STOP_2.Equals(inputKey.Key))
             {
-                //Display.ProgressMessage(progress, progressAmount);
-                isProgChange = false;
-                if (IsEncounterEnemy())
+                if (IsEncounterEnemy(false))
                 {
                     EncounterEnemy();
                 }
@@ -137,81 +214,49 @@ namespace GameLoopExercise_Hezhipeng
                     player_1.RecoverMP();
                 }
             }
-            else if (isFighting && (ATTACT_1.Equals(inputKey.Key) || ATTACT_2.Equals(inputKey.Key)))
+        }
+
+        private void Fighting()
+        {
+            if (enemys != null && enemys.Count > 0 && player_1 != null && !player_1.IsDea())
             {
-                if (enemys != null && enemys.Count > 0)
+                if (ATTACT_1.Equals(inputKey.Key) || ATTACT_2.Equals(inputKey.Key))
                 {
                     // 玩家攻击
-                    player_1.Attack(enemys[0], player_1.skills[0]);
-                    ClearingPlayerAction();
+                    Fight(player_1, player_1.skills[0], enemys[0]);
 
                     // 怪物攻击
-                    for (int i = 0; i < enemys.Count; i++)
+                    foreach (Charactar enemy in enemys)
                     {
-                        enemys[i].Attack(player_1, enemys[i].skills[0]);
+                        Fight(enemy, enemy.skills[0], player_1);
                     }
-                    ClearingEnemyAction();
 
-                    if (isFighting)
-                    {
-                        Display.FightingMessage(enemys, player_1);
-                    }
-                    else
-                    {
-                        Display.EndFightingMessage();
-                    }
                 }
-            }
-            else if (isFighting && (RUN_1.Equals(inputKey.Key) || RUN_2.Equals(inputKey.Key)))
-            {
-                if (enemys != null && enemys.Count > 0)
+                else if (RUN_1.Equals(inputKey.Key) || RUN_2.Equals(inputKey.Key))
                 {
-                    if (IsRunAway())
+                    if (!IsRunAway())
                     {
-                        isFighting = false;
-                        Display.RunAwaySuccessMessage();
-                    }
-                    else
-                    {
-                        Display.RunAwayDefeatedMessage();
                         // 怪物攻击
                         foreach (Charactar enemy in enemys)
                         {
                             enemy.Attack(player_1, enemy.skills[0]);
                         }
-                        ClearingEnemyAction();
-                    }
-
-                    if (isFighting)
-                    {
-                        Display.FightingMessage(enemys, player_1);
-                    }
-                    else
-                    {
-                        Display.EndFightingMessage();
                     }
                 }
             }
-            if (!isGameOver)
-            {
-                Display.InputMessage(isFighting);
-            }
         }
 
-        private bool IsEncounterEnemy()
+        private bool IsEncounterEnemy(bool isProgChange)
         {
             //前进遇敌几率>与休息遇敌几率
             if (isProgChange)
             {
-                //int encounterOdds = 70;
                 int encounterOdds = 100;
                 return IsRight(encounterOdds);
             }
             else
             {
                 int encounterOdds = 30;
-                //int encounterOdds = 100;
-                //int encounterOdds = 0;
                 return IsRight(encounterOdds);
             }
         }
@@ -219,9 +264,8 @@ namespace GameLoopExercise_Hezhipeng
         private void EncounterEnemy()
         {
             CreatEnemy();
-            isFighting = true;
-            Display.EncounterMessage(enemys);
-            Display.FightingMessage(enemys, player_1);
+            gameState = ENCOUNTER_ENEMY;
+            Thread.Sleep(1000);
         }
 
         private void CreatEnemy()
@@ -248,9 +292,19 @@ namespace GameLoopExercise_Hezhipeng
             }
         }
 
-        private void ClearingPlayerAction()
+        private void Fight(Charactar sponsor, Skill userSkill, Charactar target)
         {
-            for(int i = 0; i<enemys.Count; i++)
+            if (sponsor != null && userSkill != null && target != null)
+            {
+                sponsor.Attack(target, userSkill);
+                ClearCharactars();
+            }
+        }
+
+        private void ClearCharactars()
+        {
+            // 清除死亡敌人
+            for (int i = 0; i < enemys.Count; i++)
             {
                 if (enemys[i].IsDea())
                 {
@@ -258,26 +312,31 @@ namespace GameLoopExercise_Hezhipeng
                 }
             }
 
-            if (enemys.Count <= 0)
+            if (enemys == null || enemys.Count <= 0 || player_1 == null || player_1.IsDea())
             {
-                isFighting = false;
-            }
-        }
-
-        private void ClearingEnemyAction()
-        {
-            if (player_1.IsDea())
-            {
-                isFighting = false;
-                isGameOver = true;
-                //isRunning = false;
+                gameState = END_FIGHTING;
             }
         }
 
         private bool IsRunAway()
         {
             float runAwayOdds = 90f / (float)enemys.Count;
-            return IsRight(runAwayOdds);
+            bool isRunAway = IsRight(runAwayOdds);
+
+            if (isRunAway)
+            {
+                runAwayState = RUN_AWAY_SUCCESS;
+                Thread.Sleep(1000);
+                gameState = NOT_FIGHTING;
+            }
+            else
+            {
+                runAwayState = RUN_AWAY_DEFEATED;
+                Thread.Sleep(1000);
+                gameState = FIGHTING;
+            }
+            runAwayState = NOT_STATE;
+            return isRunAway;
         }
 
         private bool IsRight(int odds)

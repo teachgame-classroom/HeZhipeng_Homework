@@ -17,7 +17,7 @@ namespace GameLoopExercise_Hezhipeng
         
         public override int GetDamage(Charactar user)
         {
-            return user.act;
+            return user.GetAtk();
         }
     }
 }

@@ -11,24 +11,24 @@ namespace GameLoopExercise_Hezhipeng
         // 角色名称
         public string name { get; set; }
         // 角色生命值上限
-        public int maxHP { get; set; }
+        protected int maxHP;
         // 角色当前生命值
-        public int HP { get; set; }
+        protected int HP;
         // 角色自然恢复生命量
-        public int recoverHP { get; set; }
+        protected int recoverHP;
         // 角色魔力值上限
-        public int maxMP { get; set; }
+        protected int maxMP;
         // 角色当前魔力值
-        public int MP { get; set; }
+        protected int MP;
         // 角色自然恢复魔力量
-        public int recoverMP { get; set; }
+        protected int recoverMP;
         // 攻击力
-        public int act { get; set; }
+        protected int atk;
         // 技能
         public List<Skill> skills { get; set; }
         // 战斗中标示
-        public bool isFighting { get; set; }
-        protected bool isDea { get; set; }
+        protected bool isFighting { get; set; }
+        protected bool isDea;
         
         // 攻击
         public void Attack(Charactar target, Skill usedSkill)
@@ -67,6 +67,35 @@ namespace GameLoopExercise_Hezhipeng
                 // 恢复后魔力值不不能超过魔力值上限
                 MP = recoveredMP > maxMP ? maxMP : recoveredMP;
             }
+        }
+        // 获取属性值
+        public int GetMaxHP()
+        {
+            return maxHP;
+        }
+        public int GetHP()
+        {
+            return HP;
+        }
+        public int GetRecoverHP()
+        {
+            return recoverHP;
+        }
+        public int GetMaxMP()
+        {
+            return maxMP;
+        }
+        public int GetMP()
+        {
+            return MP;
+        }
+        public int GetRecoverMP()
+        {
+            return recoverMP;
+        }
+        public int GetAtk()
+        {
+            return atk;
         }
         // 获取死亡标示
         public bool IsDea()

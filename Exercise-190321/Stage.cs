@@ -48,23 +48,32 @@ namespace Exercise_190321
 
         public void Init(int level)
         {
-            stageCharSet = new char[] { 'p', 'o' };
-            col = 2;
-            row = 1;
-            playerStartPosX = 0;
-            playerStartPosY = 0;
-            playerPosX = 0;
-            playerPosY = 0;
-            goalPosX = 1;
-            goalPosY = 0;
+            try
+            {
+                ReadMapFile(level);
+                mazeLevel = level;
+            }
+            catch (Exception)
+            {
+                if (stageCharSet == null || stageCharSet.Length <= 0)
+                {
+                    stageCharSet = new char[] { PLAYER, GOAL };
+                    col = 2;
+                    row = 1;
+                    playerStartPosX = 0;
+                    playerStartPosY = 0;
+                    playerPosX = 0;
+                    playerPosY = 0;
+                    goalPosX = 1;
+                    goalPosY = 0;
+                }
+            }
             isMoved = true;
-            mazeLevel = level;
-            ReadMapFile();
         }
 
-        private void ReadMapFile()
+        private void ReadMapFile(int level)
         {
-            string mapPath = string.Format("./Map_{0}.txt", mazeLevel);
+            string mapPath = string.Format("./Map_{0}.txt", level);
             try
             {
                 string[] mapLines = File.ReadAllLines(mapPath);
@@ -137,56 +146,39 @@ namespace Exercise_190321
         public bool NextLevel()
         {
             bool hasNext = false;
+            int nextLevel = mazeLevel + 1;
 
-            char[] stageCharSetBak = stageCharSet;
-            int mazeLevelBak = mazeLevel;
-            int colBak = col;
-            int rowBak = row;
-            int playerStartPosXBak = playerStartPosX;
-            int playerStartPosYBak = playerStartPosY;
-            int playerPosXBak = playerPosX;
-            int playerPosYBak = playerPosY;
-            int goalPosXBak = goalPosX;
-            int goalPosYBak = goalPosY;
-            bool isMovedBak = isMoved;
-            
-            try
-            {
-                Init(mazeLevel + 1);
-                mazeLevel++;
-                hasNext = true;
-            }
-            catch(Exception)
-            {
-                stageCharSet = stageCharSetBak;
-                mazeLevel = mazeLevelBak;
-                col = colBak;
-                row = rowBak;
-                playerStartPosX = playerStartPosXBak;
-                playerStartPosY = playerStartPosYBak;
-                playerPosX = playerPosXBak;
-                playerPosY = playerPosYBak;
-                goalPosX = goalPosXBak;
-                goalPosY = goalPosYBak;
-                isMoved = isMovedBak;
-                hasNext = false;
-            }
+            Init(nextLevel);
+            hasNext = nextLevel == mazeLevel;
+
             return hasNext;
         }
 
         private bool IsWall(int posX, int posY)
         {
-            return WALL.Equals(GetStageChar(posX, posY)) || GOAL.Equals(GetStageChar(posX, posY));
+            int index = posX + posY * col;
+            return index>=0 && index <stageCharSet.Length 
+                && (WALL.Equals(GetStageChar(posX, posY)) || GOAL.Equals(GetStageChar(posX, posY)));
         }
 
         private char GetStageChar(int x, int y)
         {
-            return stageCharSet[x + y * col];
+            char ret = char.MinValue;
+            int index = x + y * col;
+            if(index>=0 && index < stageCharSet.Length)
+            {
+                ret = stageCharSet[index];
+            }
+            return ret;
         }
 
         private void SetStageChar(int x, int y, char ch)
         {
-            stageCharSet[x + y * col] = ch;
+            int index = x + y * col;
+            if (index >= 0 && index < stageCharSet.Length)
+            {
+                stageCharSet[index] = ch;
+            }
         }
 
 

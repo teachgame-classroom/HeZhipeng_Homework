@@ -29,5 +29,33 @@ namespace GameLoopExercise_Hezhipeng
             result = result > max ? max : result;
             return result;
         }
+
+        public static bool IsRight(int odds)
+        {
+            bool isEncounter_1 = GetRandom(1, 100) <= odds;
+            bool isEncounter_2 = GetRandom(1, 100) <= odds;
+            if (isEncounter_1 && isEncounter_2)
+            {
+                return true;
+            }
+            else
+            {
+                return GetRandom(1, 100) <= odds;
+            }
+        }
+
+        public static bool IsRight(float odds)
+        {
+            bool isEncounter_1 = GetRandom(1f, 100f) <= odds;
+            bool isEncounter_2 = GetRandom(1f, 100f) <= odds;
+            if (isEncounter_1 && isEncounter_2)
+            {
+                return true;
+            }
+            else
+            {
+                return GetRandom(1f, 100f) <= odds;
+            }
+        }
     }
 }

@@ -1,0 +1,76 @@
+游戏开发14期课后作业_190322
+
+1.填空：请找出以下语句的一处语法错误并改正
+
+void Hello()
+{
+    // Console.WriteLine("Hello);
+    Console.WriteLine("Hello");
+}
+
+
+2.填空：下面的方法少了一行语句，出现了“不是所有的代码路径都返回值”的错误，请在横线处填入缺少的语句。
+
+int Add(int a, int b)
+{
+    int result = a + b;
+
+    return result;
+}
+
+
+3.填空：下面的方法缺少了一行语句，请根据方法名称和已有代码，推测它的本来功能，并补充缺少的语句。
+
+这个方法的功能是：_return false;_____________
+
+bool IsPositive(int num)
+{
+    if(num > 0)
+    {
+        return true;
+    }
+
+    ________________
+}
+
+
+4.填空：写出以下二进制数对应的十进制数
+
+0000  _0_______
+
+0001  _1_______
+
+0010  _2_______
+
+0011  _3_______
+
+0100  _4_______
+
+1000  _8_______
+
+1100  _12_______
+
+1111  _15_______
+
+
+5.C#的文件读写功能的所在命名空间是（ B ）
+
+A. System	B. System.IO	C. UnityEngine	D. File
+
+
+6.File类的哪个方法可以读取文件的全部内容，并以字符串数组的形式返回（ B ）
+
+A. ReadAllBytes		B. RealAllLines		C. ReadAllText		D. Read
+
+
+7.使用FileStream对象访问文件后，需要调用（ D ）方法来关闭文件
+
+A. Read		B. ReadByte	C. Write	D. Close
+
+ 
+思考题：为迷宫游戏制作一个地图编辑器，可以生成能在迷宫游戏里使用的地图txt文件。
+
+操作方式参考：
+使用WASD移动光标
+按下P，O，*，#四个键时在光标所在位置放置对应字符
+按ESC退出并保存文件

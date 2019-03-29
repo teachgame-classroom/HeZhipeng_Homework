@@ -1,0 +1,65 @@
+游戏开发14期课后作业_190328
+
+1. 以下选项中，与Unity项目的Assets文件夹对应的是（ B ）
+
+A. Application.streamingAssetsPath
+
+B. Application.dataPath
+
+C. Application.persistentDataPath
+
+D. Application.temporaryCachePath
+
+
+2. 如果希望Unity项目中的某个文件在导出可执行文件后仍能使用System.IO文件类访问，应该将这个文件存放在（ C ）文件夹内。
+
+A. Assets
+
+B. Assets\Resources
+
+C. Assets\StreamingAssets
+
+D. C:\
+
+
+3. 有一个Unity项目，文件夹路径为 D:\HelloProject，则该项目的Application.streamingAssetsPath对应的路径是（ B ）
+
+A. D:\HelloProject\StreamingAssets
+
+B. D:\HelloProject\Assets\StreamingAssets
+
+C. D:\StreamingAssets
+
+D. D:\HelloProject\Resources\StreamingAssets
+
+
+4. 某个Unity项目的 Application.persistentDataPath 路径为 C:\Users\GameDev\AppData\LocalLow\Blizzard\Warcraft4，
+关于这个项目的描述，错误的是（ A ）
+
+A. 创建者的Windows用户名是AppData
+
+B. 项目的所属公司名称是Blizzard
+
+C. 项目的名称是Warcraft4
+
+D. 此路径通常用于存放进度文件
+
+
+5. 某个Unity项目的名称是CoolGame，若将其可执行文件导出到 D:\TestBuild 文件夹，它的 StreamingAssets 文件夹的路径将是（ C ）
+
+A. D:\CoolGame\StreamingAssets
+
+B. D:\CoolGame_Data\StreamingAssets
+
+C. D:\TestBuild\CoolGame\StreamingAssets
+
+D. D:\TestBuild\CoolGame_Data\StreamingAssets
+
+
+6. 一个可序列化的对象里面的属性值能够被保存为二进制文件，将一个类型指定为“可序列化”的C#特性关键字是（ A ）
+
+A. [System.Serializable]	B. [System.Binary]	C. [System.IO]	D. [System.Serialization]
+
+
+
+7. 在Unity里制作一个小游戏，玩法任意，需要有得分概念，并有保存分数进度和读取分数进度功能。

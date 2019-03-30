@@ -1,6 +1,6 @@
-ÓÎÏ·¿ª·¢14ÆÚ¿Îºó×÷Òµ_190328
+ï»¿æ¸¸æˆå¼€å‘14æœŸè¯¾åä½œä¸š_190328
 
-1. ÒÔÏÂÑ¡ÏîÖĞ£¬ÓëUnityÏîÄ¿µÄAssetsÎÄ¼ş¼Ğ¶ÔÓ¦µÄÊÇ£¨ B £©
+1. ä»¥ä¸‹é€‰é¡¹ä¸­ï¼Œä¸Unityé¡¹ç›®çš„Assetsæ–‡ä»¶å¤¹å¯¹åº”çš„æ˜¯ï¼ˆ B ï¼‰
 
 A. Application.streamingAssetsPath
 
@@ -11,7 +11,7 @@ C. Application.persistentDataPath
 D. Application.temporaryCachePath
 
 
-2. Èç¹ûÏ£ÍûUnityÏîÄ¿ÖĞµÄÄ³¸öÎÄ¼şÔÚµ¼³ö¿ÉÖ´ĞĞÎÄ¼şºóÈÔÄÜÊ¹ÓÃSystem.IOÎÄ¼şÀà·ÃÎÊ£¬Ó¦¸Ã½«Õâ¸öÎÄ¼ş´æ·ÅÔÚ£¨ C £©ÎÄ¼ş¼ĞÄÚ¡£
+2. å¦‚æœå¸Œæœ›Unityé¡¹ç›®ä¸­çš„æŸä¸ªæ–‡ä»¶åœ¨å¯¼å‡ºå¯æ‰§è¡Œæ–‡ä»¶åä»èƒ½ä½¿ç”¨System.IOæ–‡ä»¶ç±»è®¿é—®ï¼Œåº”è¯¥å°†è¿™ä¸ªæ–‡ä»¶å­˜æ”¾åœ¨ï¼ˆ C ï¼‰æ–‡ä»¶å¤¹å†…ã€‚
 
 A. Assets
 
@@ -22,7 +22,7 @@ C. Assets\StreamingAssets
 D. C:\
 
 
-3. ÓĞÒ»¸öUnityÏîÄ¿£¬ÎÄ¼ş¼ĞÂ·¾¶Îª D:\HelloProject£¬Ôò¸ÃÏîÄ¿µÄApplication.streamingAssetsPath¶ÔÓ¦µÄÂ·¾¶ÊÇ£¨ B £©
+3. æœ‰ä¸€ä¸ªUnityé¡¹ç›®ï¼Œæ–‡ä»¶å¤¹è·¯å¾„ä¸º D:\HelloProjectï¼Œåˆ™è¯¥é¡¹ç›®çš„Application.streamingAssetsPathå¯¹åº”çš„è·¯å¾„æ˜¯ï¼ˆ B ï¼‰
 
 A. D:\HelloProject\StreamingAssets
 
@@ -33,19 +33,19 @@ C. D:\StreamingAssets
 D. D:\HelloProject\Resources\StreamingAssets
 
 
-4. Ä³¸öUnityÏîÄ¿µÄ Application.persistentDataPath Â·¾¶Îª C:\Users\GameDev\AppData\LocalLow\Blizzard\Warcraft4£¬
-¹ØÓÚÕâ¸öÏîÄ¿µÄÃèÊö£¬´íÎóµÄÊÇ£¨ A £©
+4. æŸä¸ªUnityé¡¹ç›®çš„ Application.persistentDataPath è·¯å¾„ä¸º C:\Users\GameDev\AppData\LocalLow\Blizzard\Warcraft4ï¼Œ
+å…³äºè¿™ä¸ªé¡¹ç›®çš„æè¿°ï¼Œé”™è¯¯çš„æ˜¯ï¼ˆ A ï¼‰
 
-A. ´´½¨ÕßµÄWindowsÓÃ»§ÃûÊÇAppData
+A. åˆ›å»ºè€…çš„Windowsç”¨æˆ·åæ˜¯AppData
 
-B. ÏîÄ¿µÄËùÊô¹«Ë¾Ãû³ÆÊÇBlizzard
+B. é¡¹ç›®çš„æ‰€å±å…¬å¸åç§°æ˜¯Blizzard
 
-C. ÏîÄ¿µÄÃû³ÆÊÇWarcraft4
+C. é¡¹ç›®çš„åç§°æ˜¯Warcraft4
 
-D. ´ËÂ·¾¶Í¨³£ÓÃÓÚ´æ·Å½ø¶ÈÎÄ¼ş
+D. æ­¤è·¯å¾„é€šå¸¸ç”¨äºå­˜æ”¾è¿›åº¦æ–‡ä»¶
 
 
-5. Ä³¸öUnityÏîÄ¿µÄÃû³ÆÊÇCoolGame£¬Èô½«Æä¿ÉÖ´ĞĞÎÄ¼şµ¼³öµ½ D:\TestBuild ÎÄ¼ş¼Ğ£¬ËüµÄ StreamingAssets ÎÄ¼ş¼ĞµÄÂ·¾¶½«ÊÇ£¨ C £©
+5. æŸä¸ªUnityé¡¹ç›®çš„åç§°æ˜¯CoolGameï¼Œè‹¥å°†å…¶å¯æ‰§è¡Œæ–‡ä»¶å¯¼å‡ºåˆ° D:\TestBuild æ–‡ä»¶å¤¹ï¼Œå®ƒçš„ StreamingAssets æ–‡ä»¶å¤¹çš„è·¯å¾„å°†æ˜¯ï¼ˆ C ï¼‰
 
 A. D:\CoolGame\StreamingAssets
 
@@ -56,10 +56,10 @@ C. D:\TestBuild\CoolGame\StreamingAssets
 D. D:\TestBuild\CoolGame_Data\StreamingAssets
 
 
-6. Ò»¸ö¿ÉĞòÁĞ»¯µÄ¶ÔÏóÀïÃæµÄÊôĞÔÖµÄÜ¹»±»±£´æÎª¶ş½øÖÆÎÄ¼ş£¬½«Ò»¸öÀàĞÍÖ¸¶¨Îª¡°¿ÉĞòÁĞ»¯¡±µÄC#ÌØĞÔ¹Ø¼ü×ÖÊÇ£¨ A £©
+6. ä¸€ä¸ªå¯åºåˆ—åŒ–çš„å¯¹è±¡é‡Œé¢çš„å±æ€§å€¼èƒ½å¤Ÿè¢«ä¿å­˜ä¸ºäºŒè¿›åˆ¶æ–‡ä»¶ï¼Œå°†ä¸€ä¸ªç±»å‹æŒ‡å®šä¸ºâ€œå¯åºåˆ—åŒ–â€çš„C#ç‰¹æ€§å…³é”®å­—æ˜¯ï¼ˆ A ï¼‰
 
 A. [System.Serializable]	B. [System.Binary]	C. [System.IO]	D. [System.Serialization]
 
 
 
-7. ÔÚUnityÀïÖÆ×÷Ò»¸öĞ¡ÓÎÏ·£¬Íæ·¨ÈÎÒâ£¬ĞèÒªÓĞµÃ·Ö¸ÅÄî£¬²¢ÓĞ±£´æ·ÖÊı½ø¶ÈºÍ¶ÁÈ¡·ÖÊı½ø¶È¹¦ÄÜ¡£
+7. åœ¨Unityé‡Œåˆ¶ä½œä¸€ä¸ªå°æ¸¸æˆï¼Œç©æ³•ä»»æ„ï¼Œéœ€è¦æœ‰å¾—åˆ†æ¦‚å¿µï¼Œå¹¶æœ‰ä¿å­˜åˆ†æ•°è¿›åº¦å’Œè¯»å–åˆ†æ•°è¿›åº¦åŠŸèƒ½ã€‚

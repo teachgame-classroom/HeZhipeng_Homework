@@ -1,16 +1,16 @@
-��Ϸ����14�ڿκ���ҵ_190327
+﻿游戏开发14期课后作业_190327
 
-1. Unity�ű��м�����Դ�ļ��ķ����ǣ� B ��
+1. Unity脚本中加载资源文件的方法是（ B ）
 
 A. Resource.Load()	B. Resources.Load()	C. GameObject.Instantiate()	D. File.ReadAllLines()
 
 
-2. Unity��Ϸ�����д��ڵ���Ϸ��������������ǣ� A ��
+2. Unity游戏场景中存在的游戏对象的类型名称是（ A ）
 
 A. GameObject	B. Monobehaviour	C. Component	D. Prefab
 
 
-3. ������������˳�򱻴����ˣ����ǵ�����һ����ȷ˳���ǣ�C > D > A > B��
+3. 以下四条语句的顺序被打乱了，它们的其中一种正确顺序是（C > D > A > B）
 
 A. go.AddComponent<SpriteRenderer>();
 
@@ -21,8 +21,8 @@ C. GameObject go = new GameObject("ship");
 D. Sprite sprite = Resources.Load<Sprite>("ShipSprite");
 
 
-4. С������Unity��ʵ�����¹��ܣ����ո��������ҿɿ��ƵĽ�ɫ����ɫ����֮��W��ǰ�ƶ���
-д��������ʱ�������ɵĽ�ɫ�����ƶ����������Ĵ��룬�ҳ����²����ƶ���ԭ��
+4. 小明想在Unity里实现以下功能：按空格键生成玩家可控制的角色，角色生成之后按W向前移动。
+写完代码测试时发现生成的角色不能移动，请检查他的代码，找出导致不能移动的原因。
 
 public class SpawnAndMove : Monobehaviour
 {
@@ -48,8 +48,8 @@ public class SpawnAndMove : Monobehaviour
 	}
 }
 
-�����ƶ���ԭ���ǣ�����W�Ĵ����������, Ӧ����player; 
+不能移动的原因是：按下W的处理对象错误, 应操作player; 
                   player.transform.position += player.transform.forward * 10 * Time.deltaTime;
 
 
-5. ��Unity��дһ���ű���ʵ��С������Ҫʵ�ֵĹ��ܡ�
+5. 在Unity里写一个脚本，实现小明本来要实现的功能。

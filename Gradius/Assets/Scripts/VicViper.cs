@@ -56,11 +56,18 @@ public class VicViper : Spaceship
 
     protected override void Init()
     {
+        StopWatch watch = new StopWatch();
         base.Init();
+        watch.Pause();
+        watch.Restart();
         primaryWeapon = PrimaryWeaponType.Normal;
         vicviperPre = Resources.Load<GameObject>(VICVIPER_PATH);
         halfLocalScale = gameObject.transform.localScale * .5f;
+        watch.Pause();
+        watch.Restart();
         LoadOptions();
+        watch.Pause();
+        watch.Stop();
     }
 
     private void LoadOptions()
